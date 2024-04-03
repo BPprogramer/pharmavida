@@ -36,13 +36,14 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>id</th>
                                     <th>CODIGO</th>
                                     <th>PRODUCTO</th>
                              
                                     <th>CANTIDAD</th>
                                     <th>VALOR UNITARIO</th>
                                     <th>TOTAL</th>
-                                    <th>FECHA</th>
+                                 
                                 </tr>
                             </thead>
 

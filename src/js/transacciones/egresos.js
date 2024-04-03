@@ -163,7 +163,7 @@
           
 
             datos.append('egreso', egreso.value);
-            datos.append('descripcion' , descripcion.value)
+            datos.append('descripcion' , (descripcion.value).trim())
 
         
             btnSubmit.disabled = true;

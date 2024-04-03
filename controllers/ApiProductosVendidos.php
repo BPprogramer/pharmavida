@@ -19,6 +19,8 @@ class ApiProductosVendidos
         $fecha_final_dt = new DateTime($fecha_final);
 
         $productos_ventas = ProductosVenta::all();
+
+    
         $productos_vendidos = [];
         foreach ($productos_ventas as $producto) {
             $venta = Venta::find($producto->venta_id);
@@ -33,6 +35,29 @@ class ApiProductosVendidos
             }
         }
 
+        // $arreglo_final = [];
+
+        // foreach($productos_vendidos as $key=>$value){
+        //     if(!empty($arreglo_final)){
+
+        //         $existe = true;
+        //         foreach($arreglo_final as $producto_existe){
+        //             if($producto_existe->producto_id == $value->producto_id){
+        //                 $arreglo_final[$key]->cantidad = $arreglo_final[$key]->cantidad + $value->cantidad;
+        //                 $existe = false;
+        //             }
+        //         }
+
+        //         if($existe == true){
+        //             $arreglo_final[$key] = $value;
+        //         }
+        //     }else{
+        //         $arreglo_final[] = $value;
+        //     }
+        // }
+
+        // debuguear($arreglo_final);
+
 
         $i = 0;
         $datoJson = '{
@@ -45,14 +70,15 @@ class ApiProductosVendidos
 
             $datoJson .= '[
                         "' . $i . '",
+                        "' . $info_producto->id. '",
                         "' . $info_producto->codigo . '",
                         "' . $info_producto->nombre . '",
                       
                       
                         "' . $producto->cantidad . '",
-                        "' . number_format($producto->precio) . '",
-                        "' . number_format($producto->precio*$producto->cantidad ) . '",
-                        "' . $producto->fecha . '"
+                        "' . $producto->precio . '",
+                        "' . $producto->precio*$producto->cantidad  . '"
+                
                  ]';
             if ($i != count($productos_vendidos)) {
                 $datoJson .= ",";
