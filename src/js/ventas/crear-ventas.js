@@ -449,7 +449,7 @@
                 url = `${location.origin}/api/crear-venta`;
             }
 
-            // guardarVentaBtn.disabled = true;
+            guardarVentaBtn.disabled = true;
             try {
 
                 const respuesta = await fetch(url, {
