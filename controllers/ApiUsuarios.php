@@ -207,8 +207,12 @@ use Model\Usuario;
                     $_SESSION['nombre'] = $usuario->nombre;
                  
                     $_SESSION['email'] = $usuario->email;
-                    $_SESSION['admin'] = $usuario->roll == 1 ? true: false;
-                    echo json_encode(['type'=>'success', 'msg'=>'logueado']);
+                    $_SESSION['roll'] = $usuario->roll;
+                    $ruta = 'inicio';
+                    if($_SESSION['roll']!=1){
+                           $ruta = 'crear-venta';
+                    }
+                    echo json_encode(['type'=>'success', 'msg'=>'logueado',  'ruta'=>$ruta]);
                     return;
                     
                 } else {

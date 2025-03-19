@@ -72,10 +72,13 @@
                         dataFilter: function (data) {
                             const jsonData = JSON.parse(data);
                             let newJson = [];
-                        
+                            let newArray = [];
                             const datos = jsonData.data;
+                            console.log(datos)
+                            // Iterar sobre los datos y sumar las cantidades por ID de producto
                             datos.forEach(function (row, index) {
-                              
+                                let idProducto = row[1]; // Obtener el ID del producto
+                                let cantidad = parseInt(row[4]) // Obtener la cantidad (convertida a número)
                                 if (newJson.length > 0) {
                                     let existe = false;
                                     newJson.forEach((producto, indexProducto) => {
@@ -94,9 +97,27 @@
                                 }
 
                                
-                            });
-                       
 
+
+
+                                // // Sumar la cantidad al total correspondiente al ID de producto
+                                // if (sumasPorProducto.hasOwnProperty(idProducto)) {
+                                //     sumasPorProducto[idProducto] += cantidad;
+                                // } else {
+                                //     sumasPorProducto[idProducto] = cantidad;
+                                // }
+                            });
+                            console.log(newJson);
+
+                            // Crear un nuevo arreglo de datos con los totales por ID de producto
+
+                            // let nuevosDatos = [];
+                            // Object.keys(sumasPorProducto).forEach(function (idProducto) {
+                            //     nuevosDatos.push([idProducto, sumasPorProducto[idProducto]]);
+                            // });
+
+
+                            // Devolver los datos procesados como una cadena JSON
                             return JSON.stringify({ data: newJson });
                         }
                     },

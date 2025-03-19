@@ -21,7 +21,10 @@
                     body:datos,
                     method:'POST'
                 })
+                console.log(respuesta)
                 const resultado = await respuesta.json();
+     
+         
                 elimiarToastAnterior();
                 if(resultado.type=='error'){
                     btnSubmit.disabled=false;
@@ -32,7 +35,7 @@
                         body: resultado.msg
                       })
                 }else{
-                    window.location.href = '/inicio'
+                    window.location.href = resultado.ruta
                 }
             } catch (error) {
                 
