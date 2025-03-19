@@ -10,7 +10,7 @@ class ProductosController {
     public static function index(Router $router){
         
            
-        if(!is_auth() || $_SESSION['roll']!=1){
+        if(!is_auth()){
             header('Location:/login');
         }
         

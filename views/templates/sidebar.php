@@ -65,7 +65,7 @@
               </a>
             </li>
 
-            <?php if ($_SESSION['roll'] == 1) { ?>
+      
               <li class="nav-item">
                 <a href="/reporte-ventas" class="nav-link <?php echo $_SERVER['REQUEST_URI'] == "/reporte-ventas" ? 'active' : '' ?>" style="<?php echo  $_SERVER['REQUEST_URI'] == "/reporte-ventas"  ? 'background-color:white !important;' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
@@ -79,7 +79,7 @@
                 </a>
               </li>
 
-            <?php  } ?>
+       
 
           </ul>
         </li>
@@ -110,7 +110,7 @@
             </p>
           </a>
         </li>
-        <?php if ($_SESSION['roll'] == 1) { ?>
+
           <li class="nav-item">
             <a href="/productos" class="nav-link <?php echo $_SERVER['REQUEST_URI'] == "/productos" ? 'active' : '' ?>">
               <i class="nav-icon fa-brands fa-product-hunt"></i>
@@ -120,7 +120,7 @@
               </p>
             </a>
           </li>
-        <?php  } ?>
+ 
         <li class="nav-item">
           <a href="/compras" class="nav-link <?php echo pagina_actual('/compras') ? 'active' : '' ?>">
             <i class="nav-icon fa-solid fa-bag-shopping"></i>

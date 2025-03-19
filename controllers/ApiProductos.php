@@ -29,7 +29,7 @@ class ApiProductos
     }
     public static function editar()
     {
-        if (!is_admin()) {
+        if (!is_auth()) {
             echo json_encode(['type' => 'error', 'msg' => 'Hubo un error, porfavor intente nuevamente']);
             return;
         }
@@ -112,57 +112,45 @@ class ApiProductos
     public static function productos()
     {
         $productos = Producto::all();
-        $i = 0;
-        $datoJson = '{
-             "data": [';
-        foreach ($productos as $key => $producto) {
-            $i++;
+        $data = []; // Array para almacenar los datos de los productos
 
-            $acciones = "<div class='d-flex justify-content-center' >";
-            $acciones .= "<button data-producto-id ='" . $producto->id . "' id='editar'  type='button' class='btn btn-sm bg-hover-azul mx-2 text-white toolMio'><span class='toolMio-text'>Editar</span><i class='fas fa-pen'></i></button>";
-            $acciones .= "<button data-producto-id ='" . $producto->id . "' id='info'  type='button' class='btn btn-sm bg-hover-azul mx-2 text-white toolMio'><span class='toolMio-text'>Ver</span><i class='fas fa-search'></i></button>";
-            $acciones .= "<button data-producto-id ='" . $producto->id . "' id='eliminar'  type='button' class='btn btn-sm bg-hover-azul mx-2 text-white toolMio' ><span class='toolMio-text'>Eliminar</span><i class='fas fa-trash' ></i></button>";
+        foreach ($productos as $key => $producto) {
+            // Generar las acciones (botones de Editar, Ver, Eliminar)
+            $acciones = "<div class='d-flex justify-content-center'>";
+            $acciones .= "<button data-producto-id='" . $producto->id . "' id='editar' type='button' class='btn btn-sm bg-hover-azul mx-2 text-white toolMio'><span class='toolMio-text'>Editar</span><i class='fas fa-pen'></i></button>";
+          /*   $acciones .= "<button data-producto-id='" . $producto->id . "' id='info' type='button' class='btn btn-sm bg-hover-azul mx-2 text-white toolMio'><span class='toolMio-text'>Ver</span><i class='fas fa-search'></i></button>"; */
+            $acciones .= "<button data-producto-id='" . $producto->id . "' id='eliminar' type='button' class='btn btn-sm bg-hover-azul mx-2 text-white toolMio'><span class='toolMio-text'>Eliminar</span><i class='fas fa-trash'></i></button>";
             $acciones .= "</div>";
 
-
-
-            $stock = '';
+            // Generar el stock (botón de agregar stock)
+            $stock = "<div class='d-flex justify-content-center'>";
             if ($producto->stock <= $producto->stock_minimo) {
-                $stock = "<div class='d-flex justify-content-center' >";
-                $stock .= "<button data-producto-id ='" . $producto->id . "' id='agregar_stock'  type='button' class='btn  w-65 btn-inline btn-danger btn-sm ' style='min-width:70px'>" . $producto->stock . "</button>";
-                $stock .= "</div >";
+                $stock .= "<button data-producto-id='" . $producto->id . "' id='agregar_stock' type='button' class='btn w-65 btn-inline btn-danger btn-sm' style='min-width:70px'>" . $producto->stock . "</button>";
             } else {
-                $stock = "<div class='d-flex justify-content-center'>";
-                $stock .= "<button data-producto-id ='" . $producto->id . "' id='agregar_stock'  type='button' class='btn w-65 btn-inline bg-success text-white btn-sm' style='min-width:70px'>" . $producto->stock . "</button>";
-                $stock .= "</div >";
+                $stock .= "<button data-producto-id='" . $producto->id . "' id='agregar_stock' type='button' class='btn w-65 btn-inline bg-success text-white btn-sm' style='min-width:70px'>" . $producto->stock . "</button>";
             }
+            $stock .= "</div>";
 
+            // Asegurarse de que el código no sea nulo
+            $codigo = $producto->codigo ? $producto->codigo : "";
 
-            if (!$producto->codigo) {
-                $producto->codigo = "";
-            }
-
-
-            $datoJson .= '[
-                             "' . $i . '",
-                             "' . $producto->codigo . '",
-                             "' . $producto->nombre . '",
-                             "' . $stock . '",
-                             "' . number_format($producto->precio_compra) . '",
-                             "' . number_format($producto->precio_venta) . '",
-                             "' . $acciones . '"
-                     ]';
-            if ($key != count($productos) - 1) {
-                $datoJson .= ",";
-            }
+            // Agregar los datos del producto al array
+            $data[] = [
+                $key + 1, // Índice
+                $codigo, // Código del producto
+                $producto->nombre, // Nombre del producto
+                $stock, // Stock (HTML)
+                number_format($producto->precio_compra), // Precio de compra formateado
+                number_format($producto->precio_venta), // Precio de venta formateado
+                $acciones // Acciones (HTML)
+            ];
         }
 
-        $datoJson .=  ']}';
-
+        // Generar el JSON final
+        $datoJson = json_encode(["data" => $data], JSON_UNESCAPED_SLASHES);
 
         echo $datoJson;
     }
-
     public static function consultarProducto()
     {
         $id = $_GET['id'];
