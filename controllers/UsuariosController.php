@@ -10,7 +10,7 @@ class UsuariosController {
     public static function index(Router $router){
       
 
-         session_start();
+        session_start();
         if(!is_auth() || $_SESSION['roll']!=1){
             header('Location:/login');
         }

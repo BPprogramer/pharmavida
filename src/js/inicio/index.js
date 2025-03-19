@@ -45,6 +45,7 @@
             try {
                 const respuesta = await fetch(url);
                 const resultado = await respuesta.json();
+                console.log(resultado)
                 mostrarInfo(resultado);
             } catch (error) {
                 console.log(error)
